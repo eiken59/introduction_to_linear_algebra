@@ -230,6 +230,9 @@
 \newcommand{\bfu}{\textbf{u}}
 \newcommand{\bfx}{\textbf{x}}
 \newcommand{\bfy}{\textbf{y}}
+\newcommand{\bfalpha}{\text{\boldmath$\alpha$}}
+\newcommand{\bfepsilon}{\text{\boldmath$\epsilon$}}
+\newcommand{\bfvarepsilon}{\text{\boldmath$\varepsilon$}}
 \newcommand{\pfexercise}{This is an exercise left to the reader.}
 
 \linespread{2}
@@ -246,7 +249,7 @@
 \delimiterfactor=100
 
 \setcounter{section}{0}
-\numberwithin{equation}{theorem}
+\numberwithin{equation}{section}
 
 \makeatletter
 \newcommand{\vast}{\bBigg@{4}}
@@ -296,10 +299,6 @@ There are three main ways to see this problem:
 
 Row picture describes the relationship among equations. Take (\ref{example equation for the essense of linear algebra}) for an example, the graph shows the concept of row picture.
 
-\begin{center}
-    \includegraphics[width=0.7\textwidth]{example equation for the essense of linear algebra.png}
-\end{center}
-
 Column picture sees unknowns as scalars of vectors. In (\ref{example equation for the essense of linear algebra}), the system can be written as 
 \begin{equation}\label{example equation in form of vectors}
     x\begin{bmatrix}
@@ -310,7 +309,13 @@ Column picture sees unknowns as scalars of vectors. In (\ref{example equation fo
         0 \\ 3
     \end{bmatrix}.
 \end{equation}
-Column picture is relatively difficult to draw on the $xy$-plane; however, one can imagine that, after some stretch (being multiplied by a scalar), the sum of the two vectors, $(2, -1)$ with scalar $x$ and $(-1, 2)$ with scalar $y$, is $(0, 3)$. The true answer for (\ref{example equation for the essense of linear algebra}) is $(x, y)=(1, 2)$. One can easily verify and check that 
+Column picture can be illistrated as below.
+
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{example equation for the essense of linear algebra.png}\includegraphics[width=0.5\textwidth]{example equation as column picture.png}
+\end{center}
+
+One can imagine that, after some stretch (being multiplied by a scalar), the sum of the two vectors, $(2, -1)$ with scalar $x$ and $(-1, 2)$ with scalar $y$, is $(0, 3)$. The true answer for (\ref{example equation for the essense of linear algebra}) is $(x, y)=(1, 2)$. One can easily verify and check that 
 \begin{equation*}
     1\cdot\begin{bmatrix}
         2 \\ -1
@@ -362,7 +367,7 @@ where $A$ is the coefficient matrix and $\bfx$ is the vector of unknowns. The be
 We can solve the equation by transforming the matrix $A$ into an upper triangular matrix.
 
 \begin{notation}[Matrix]
-    We usuallly use a capital latter to represent a matrix. For example, just as we see, $A$. In addition, we use the lowercase of the letter we just chose and with two numbers $i$ and $j$ to indicate the component $a_{ij}$ on the $i$-th row and the $j$-th column.
+    We usuallly use a capital latter to represent a matrix. For example, just as we see, $A$. In addition, we might use subscript so indicate the numbers of rows $m$ and the number of columns $n$ by writing $A_{m\times n}$. Moreover, we use the lowercase of the letter we just chose and with two numbers $i$ and $j$ to indicate the component $a_{ij}$ on the $i$-th row and the $j$-th column.
 \end{notation}
 
 \begin{example}
@@ -393,7 +398,7 @@ We can solve the equation by transforming the matrix $A$ into an upper triangula
     \end{bmatrix},\quad C=\begin{bmatrix}
         6 & 0 \\ 7 & -13
     \end{bmatrix}.$$ Then, $B$ is upper triangular, and $C$
-    is not upper triangular.
+    is not upper triangular since $c_{21}\ne0$.
 \end{example}
 
 If we have an upper triangular coefficient matrix, the solution for the last equation is straightforward. We can then solve the equation above it, followed by the one above that, and so on. To transform a matrix $A$ into an upper triangular matrix $U$, we simply need to multiply $A$ by an appropriate sequence of elementary matrices.
@@ -415,12 +420,65 @@ Take a matrix $$A=\begin{bmatrix}
     1 & 2 & 1 \\
     0 & 2 & -2 \\
     0 & 4 & 1
-\end{bmatrix}$$ without knowing what $E_{21}$ is now. To make the matrix upper triangular, we add $-2$ times of the second row the the third row, which makes the matrix $A$ become an upper triangular matrix $$U=E_{32}E_{21}A=\begin{bmatrix}
+\end{bmatrix},$$ where the matrix $E_{21}$ works on the first row and the second row, without knowing what $E_{21}$ is now. To make the matrix upper triangular, we add $-2$ times of the second row the the third row, which makes the matrix $A$ become an upper triangular matrix $$U=E_{32}E_{21}A=\begin{bmatrix}
     1 & 2 & 1 \\
     0 & 2 & -2 \\
     0 & 0 & 5
-\end{bmatrix}$$
-without knowing what $E_{32}$ is now as well.
+\end{bmatrix},$$ where the matrix $E_{32}$ works on the decond row and the third row, without knowing what $E_{32}$ is now as well. Sometimes, we need an $E_{31}$; however, since the first element of the third row is $0$, we do not need an $E_{31}$.
+
+What is $E_{21}$ and $E_{32}$? We have better to look into some properties of matrices first. We will answer this question after some inquires.
+
+If we have a matrix $A_{n\times n}$ and a column vector $\bfv_{n\times 1}$, what does $A\bfv$ mean? We can of course apply the matrix multiplication on it, the answer should be obvious.
+
+\begin{definition}[Matrix Multiplication]
+    Let $A$ be an $m\times n$ matrix and let $B$ be an $n\times p$ matrix. Let $C=AB$. Then, $$c_{ij}=\sum_{\ell=1}^{n}a_{i\ell}b_{\ell j}$$ for $i=1,2,\dots,m$ and for $j=1,2,\dots,p$.
+\end{definition}
+
+However, we can actually observe that $$A\bfv=\sum_{i=1}^{n} v_i\bfa_i,$$ where $v_i$ is the $i$-th component of $\bfv$ and $\bfa_i$ is the $i$-th column of $A$. Through either way can we find out that the product $A\bfv$ is a column vector and is also an $n\times 1$ matrix.
+
+How about multiplying a row vector $\bfr_{1\times n}$ at the left side of $A$? We can still have another perspective to see this operation aside from applying the multiplication rule directly, which is $$\bfr A=\sum_{i=1}^{n}r_i\bfalpha_i,$$ where $r_i$ is the $i$-th component of $\bfr$ and $\bfalpha_i$ is the $i$-th row of $A$. Therefore, $\bfr A$ will be a row vector and also a $1\times n$ matrix.
+
+Let's get back to the question mentioned just now, what is $E_{21}$ and $E_{32}$? We have $$E_{21}\begin{bmatrix}
+    1 & 2 & 1 \\
+    3 & 8 & 1 \\
+    0 & 4 & 1
+\end{bmatrix}=\begin{bmatrix}
+    1 & 2 & 1 \\
+    0 & 2 & -2 \\
+    0 & 4 & 1
+\end{bmatrix},$$ and $E_{21}$ is the operation that adds $-3$ times of the first row to the second row on $A$. We first write the system of equation with the concept $$\bfr A=\sum_{i=1}^{n}r_i\bfalpha_i,$$ having 
+\begin{equation*}
+    \left\{\begin{array}{rl}
+        \bfepsilon_1 A \!\!\!&= [1\quad 2\quad 1];\\
+        \bfepsilon_2 A \!\!\!&= [0\quad 2\quad -2];\\
+        \bfepsilon_3 A \!\!\!&= [0\quad 4\quad 1],
+    \end{array}\right.
+\end{equation*}
+where $\bfepsilon_i$ is the $i$-th row of $E_{21}$. It is clear that $\bfepsilon_1=[1\quad 0\quad 0]$ and $\bfepsilon_3=[0\quad 0\quad 1]$ since the first row and the third row of $E_{21}A$ are identical to those of $A$. The hard part is $\bfepsilon_2$. Since we add $-3$ times of the first row to the second row, the second row of $E_{21}A$ is $$[3\quad 8\quad 1]+(-3)[1\quad 2\quad 1].$$ Hence, $$\bfepsilon_2 A=(-3)[1\quad 2\quad 1]+(1)[3\quad 8\quad 1]+(0)[0\quad 4\quad 1],$$ which makes $\bfepsilon_2=[-3\quad 1\quad 0]$. We therefore obtain our matrix $$E_{21}=\begin{bmatrix}
+    1 & 0 & 0 \\
+    -3 & 1 & 0 \\
+    0 & 0 & 1
+\end{bmatrix}.$$ How about $E_{32}$? The matrix $E_{32}$ is the operation that adds $-2$ times of the second row to the third row on $E_{21}A$. By the same fashion, we obtain $$E_{32}=\begin{bmatrix}
+    1 & 0 & 0 \\
+    0 & 1 & 0 \\
+    0 & -2 & 1
+\end{bmatrix},$$ which makes $$E_{32}E_{21}A=\begin{bmatrix}
+    1 & 0 & 0 \\
+    0 & 1 & 0 \\
+    0 & -2 & 1
+\end{bmatrix}\begin{bmatrix}
+    1 & 0 & 0 \\
+    -3 & 1 & 0 \\
+    0 & 0 & 1
+\end{bmatrix}\begin{bmatrix}
+    1 & 2 & 1 \\
+    3 & 8 & 1 \\
+    0 & 4 & 1
+\end{bmatrix}=\begin{bmatrix}
+    1 & 2 & 1 \\
+    0 & 2 & -2 \\
+    0 & 0 & 5
+\end{bmatrix}.$$
 
 \subsection{Four Fundamental Subspaces}
 

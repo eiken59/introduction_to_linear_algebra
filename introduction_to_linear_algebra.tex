@@ -75,7 +75,7 @@
     rightline=true,
     skipabove=\topsep/1.5,
     skipbelow=\topsep/2.2
-]{theorem}{Theorem}[section]
+]{theorem}{Theorem}[subsection]
 \newmdtheoremenv[
     backgroundcolor=crlcolor,
     linecolor=black,
@@ -219,6 +219,7 @@
 \newcommand{\bbR}{\mathbb{R}}
 \newcommand{\bbN}{\mathbb{N}}
 \newcommand{\calL}{\mathcal{L}}
+\newcommand{\bfzero}{\textbf{0}}
 \newcommand{\bfa}{\textbf{a}}
 \newcommand{\bfb}{\textbf{b}}
 \newcommand{\bfe}{\textbf{e}}
@@ -315,24 +316,10 @@ Column picture can be illistrated as below.
     \includegraphics[width=0.5\textwidth]{example equation for the essense of linear algebra.png}\includegraphics[width=0.5\textwidth]{example equation as column picture.png}
 \end{center}
 
-One can imagine that, after some stretch (being multiplied by a scalar), the sum of the two vectors, $(2, -1)$ with scalar $x$ and $(-1, 2)$ with scalar $y$, is $(0, 3)$. The true answer for (\ref{example equation for the essense of linear algebra}) is $(x, y)=(1, 2)$. One can easily verify and check that 
-\begin{equation*}
-    1\cdot\begin{bmatrix}
-        2 \\ -1
-    \end{bmatrix}+2\cdot\begin{bmatrix}
-        -1 \\ 2
-    \end{bmatrix}=\begin{bmatrix}
-        0 \\ 3
-    \end{bmatrix}.
-\end{equation*}
-Note that the high and thin notation representing a vector in (\ref{example equation in form of vectors}) and the horizontal and with comma notation represent the same thing, i.e., both \begin{equation*}
+One can imagine that, after some stretch (being multiplied by a scalar), the sum of the two vectors, $(2, -1)$ with scalar $x$ and $(-1, 2)$ with scalar $y$, is $(0, 3)$. The true answer for (\ref{example equation for the essense of linear algebra}) is $(x, y)=(1, 2)$. One can easily verify and check the solution. Note that the high and thin notation representing a vector in (\ref{example equation in form of vectors}) and the horizontal and with comma notation represent the same thing, i.e., both \begin{equation*}
     \begin{bmatrix}
         2 \\ -1
-    \end{bmatrix}
-\end{equation*}
-and
-\begin{equation*}
-    (2, -1)
+    \end{bmatrix}\quad\quad\quad\text{and}\quad\quad\quad(2, -1)
 \end{equation*}
 represent the vector with first component $2$ and the second component $-1$. They are both called the ``column vector.'' The high and thin notation coincides with the matrix picture, which will be discussed.
 
@@ -353,7 +340,7 @@ In this case, we call $\begin{bmatrix}
 \end{bmatrix}$ the vector of unknowns. We can simply write \begin{equation*}
     A\bfx=\bfb,
 \end{equation*}
-where $A$ is the coefficient matrix and $\bfx$ is the vector of unknowns. The benefit of this form is that there might be some beautiful properties for the matrix on the left of the vector $(x, y)$. We are going to discuss those properties in this book.
+where $A$ is the coefficient matrix and $\bfx$ is the vector of unknowns. The benefit of this form is that there might be some beautiful properties for the matrix $A$. We are going to discuss those properties in this book.
 
 \subsection{Elimination with Matricies}
 
@@ -377,11 +364,7 @@ We can solve the equation by transforming the matrix $A$ into an upper triangula
 \end{example}
 
 \begin{definition}[Upper Triangular]
-    We say a square matrix $A_{n\times n}$ is upper triangular if
-    \begin{equation*}
-        a_{ij}=0
-    \end{equation*}
-    for all $n\ge i>j>0$, i.e., \begin{equation*}
+    We say a square matrix $A_{n\times n}$ is upper triangular if $a_{ij}=0$ for all $n\ge i>j>0$, i.e., \begin{equation*}
         A=\begin{bmatrix}
             & & &\\
            0 & & \ast &\\
@@ -400,6 +383,8 @@ We can solve the equation by transforming the matrix $A$ into an upper triangula
     \end{bmatrix}.$$ Then, $B$ is upper triangular, and $C$
     is not upper triangular since $c_{21}\ne0$.
 \end{example}
+
+\subsubsection*{Row Operation and Elementary Matrix}
 
 If we have an upper triangular coefficient matrix, the solution for the last equation is straightforward. We can then solve the equation above it, followed by the one above that, and so on. To transform a matrix $A$ into an upper triangular matrix $U$, we simply need to multiply $A$ by an appropriate sequence of elementary matrices.
 
@@ -428,7 +413,7 @@ Take a matrix $$A=\begin{bmatrix}
 
 What is $E_{21}$ and $E_{32}$? We have better to look into some properties of matrices first. We will answer this question after some inquires.
 
-If we have a matrix $A_{n\times n}$ and a column vector $\bfv_{n\times 1}$, what does $A\bfv$ mean? We can of course apply the matrix multiplication on it, the answer should be obvious.
+If we have a matrix $A_{m\times n}$ and a column vector $\bfv_{n\times 1}$, what does $A\bfv$ mean? We can of course apply the matrix multiplication on it, the answer should be obvious.
 
 \begin{definition}[Matrix Multiplication]
     Let $A$ be an $m\times n$ matrix and let $B$ be an $n\times p$ matrix. Let $C=AB$. Then, $$c_{ij}=\sum_{\ell=1}^{n}a_{i\ell}b_{\ell j}$$ for $i=1,2,\dots,m$ and for $j=1,2,\dots,p$.
@@ -436,7 +421,7 @@ If we have a matrix $A_{n\times n}$ and a column vector $\bfv_{n\times 1}$, what
 
 However, we can actually observe that $$A\bfv=\sum_{i=1}^{n} v_i\bfa_i,$$ where $v_i$ is the $i$-th component of $\bfv$ and $\bfa_i$ is the $i$-th column of $A$. Through either way can we find out that the product $A\bfv$ is a column vector and is also an $n\times 1$ matrix.
 
-How about multiplying a row vector $\bfr_{1\times n}$ at the left side of $A$? We can still have another perspective to see this operation aside from applying the multiplication rule directly, which is $$\bfr A=\sum_{i=1}^{n}r_i\bfalpha_i,$$ where $r_i$ is the $i$-th component of $\bfr$ and $\bfalpha_i$ is the $i$-th row of $A$. Therefore, $\bfr A$ will be a row vector and also a $1\times n$ matrix.
+How about multiplying a row vector $\bfr_{1\times m}$ at the left side of $A_{m\times n}$? We can still have another perspective to see this operation aside from applying the multiplication rule directly, which is $$\bfr A=\sum_{i=1}^{m}r_i\bfalpha_i,$$ where $r_i$ is the $i$-th component of $\bfr$ and $\bfalpha_i$ is the $i$-th row of $A$. Therefore, $\bfr A$ will be a row vector and also a $1\times m$ matrix.
 
 Let's get back to the question mentioned just now, what is $E_{21}$ and $E_{32}$? We have $$E_{21}\begin{bmatrix}
     1 & 2 & 1 \\
@@ -446,7 +431,7 @@ Let's get back to the question mentioned just now, what is $E_{21}$ and $E_{32}$
     1 & 2 & 1 \\
     0 & 2 & -2 \\
     0 & 4 & 1
-\end{bmatrix},$$ and $E_{21}$ is the operation that adds $-3$ times of the first row to the second row on $A$. We first write the system of equation with the concept $$\bfr A=\sum_{i=1}^{n}r_i\bfalpha_i,$$ having 
+\end{bmatrix},$$ and $E_{21}$ is the operation that adds $-3$ times of the first row to the second row on $A$. We first write the system of equation with the concept $$\bfr A=\sum_{i=1}^{m}r_i\bfalpha_i,$$ having 
 \begin{equation*}
     \left\{\begin{array}{rl}
         \bfepsilon_1 A \!\!\!&= [1\quad 2\quad 1];\\
@@ -479,6 +464,60 @@ where $\bfepsilon_i$ is the $i$-th row of $E_{21}$. It is clear that $\bfepsilon
     0 & 2 & -2 \\
     0 & 0 & 5
 \end{bmatrix}.$$
+
+Aside from the elementary matrix, we can have more perspective about the multiplication. From the concept of $$A\bfv=\sum_{i=1}^{n} v_i\bfa_i,$$ we can actually extend this kind of multiplication between two matrices. We just consider $$V=[\bfv_1\quad \bfv_2 \quad\cdots\quad \bfv_p]_{n\times p}$$ and $$C=AV=[A\bfv_1\quad A\bfv_2 \quad\cdots\quad A\bfv_p]_{m\times p},$$ and we can find out that each column of $C$ is a combination of columns of $A$. This kind of multiplication is thought as columns time columns.
+
+From the concept of $$\bfr A=\sum_{i=1}^{m}r_i\bfalpha_i,$$ we can also extend this kind of multiplication. We consider $$R=\begin{bmatrix}
+    \bfr_1 \\ \bfr_2 \\ \vdots \\ \bfr_k
+\end{bmatrix}_{k\times m}$$ and $$D=RA=\begin{bmatrix}
+    \bfr_1A \\ \bfr_2A \\ \vdots \\ \bfr_kA
+\end{bmatrix}_{k\times n},$$ we can fund out that each row of $D$ is a combination of rows of $A$. This kind of multiplication is thought as rows time rows.
+
+We have one more critical skill about matrix multiplication, the block multiplication. This is for big matrices. Say, we have $P_{20\times 20}Q_{20\times 20}=R_{20\times 20}$. We can separate these big matrices, for example, as $$P_{20\times 20}=\begin{bmatrix}
+    P_1 & P_2\\
+    P_3 & P_4
+\end{bmatrix},$$ where $P_1, P_2, P_3, P_4$ are all $10\times 10$. In the same fashion, we have $$P_{20\times 20}=\begin{bmatrix}
+    Q_1 & Q_2\\
+    Q_3 & Q_4
+\end{bmatrix}$$ and $$R_{20\times 20}=\begin{bmatrix}
+    R_1 & R_2\\
+    R_3 & R_4
+\end{bmatrix}.$$ Since $P_{20\times 20}Q_{20\times 20}=R_{20\times 20}$, we will have $R_1=P_1Q_1+P_2Q_3$. Nobody can see this instantly work, but it works.
+
+\subsubsection*{Inverse Matrix}
+
+For the equation $A_{m\times n}\bfx_{n\times 1}=\bfb_{m\times 1}$, if we can find some matrix $M$ such that $MA\bfx=\bfx$, then we just obtain the solution $\bfx=M\bfb$. How simple linear algebra is! In order to obtain the solution, we might ask for a stronger condition. If we have $MA\bfx=\bfx$ for all $\bfx\in\bbR^{n}$, then $MA$ is an $n\times n$ identity matrix, where we write $MA=I_n$. In this case, we call $M$ a left inverse of $A$. For the opposite case, $AN=I_m$, we call $N$ a right inverse of $A$.
+
+\begin{definition}[Invertible and Inverse Matirx]
+    Let $A$ be an $n\times n$ matrix. We say $A$ is invertible if there exists a unique matrix $B$ such that $AB=BA=I_n$. If such matrix $B$ exists, $A^{-1}$ denotes $B$ and is called the inverse (matrix) of $A$.
+\end{definition}
+
+\begin{theorem}[Inverse Matrix for Square Matrix]
+    Let $A$ be an $n\times n$ matrix. If $AB=I_n$, then $BA=I_n$, and vise versa.
+\end{theorem}
+
+Now, the question is that how we can find the inverse and in what condition we can find the inverse?
+
+\begin{question}
+    What conditions do we have that suggest a matrix is invertible? Are they sufficient or necessary?
+\end{question}
+
+\begin{theorem}
+    Let $A$ be an matrix. The equation $A\bfx=\bfzero$ has a solution other than $\bfx=\bfzero$ if and only if $A$ is not ivertible.
+\end{theorem}
+
+We now obtain a sufficient and necessary condition about whether a matrix is invertible or not. We can now find the ways to obtain inverses.
+
+\begin{theorem}
+    Let $A$ be invertible. We consider the augmented matrix $[A\quad I]$ and use the Gauss-Jordan method on it until we have $[I\quad B]$. Then, $B$ is the inverse of $A$.
+\end{theorem}
+A quick explanation is that we see through the perspective of columns time columns. We are looking for the solution to equations 
+\begin{equation*}
+    A\bfb_i=\bfe_i,
+\end{equation*}
+for $i=1,2,\dots,n$, where $\bfb_i$ is the $i$-th column of the inverse of $A$ and $\bfe_i$ is the $i$-th column of $I_n$. Since these equations have the same coefficient matrix, the row operation on them are the same. Hence, we can just do once Gauss-Jordan method on the whold augmented matrix.
+
+In addition, since we are doing row operations, so we can know that inverses are just multiplication of elementary matrices.
 
 \subsection{Four Fundamental Subspaces}
 

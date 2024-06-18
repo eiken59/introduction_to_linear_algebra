@@ -354,17 +354,17 @@ where $A$ is the coefficient matrix and $\bfx$ is the vector of unknowns. The be
 We can solve the equation by transforming the matrix $A$ into an upper triangular matrix.
 
 \begin{notation}[Matrix]
-    We usuallly use a capital latter to represent a matrix. For example, just as we see, $A$. In addition, we might use subscript so indicate the numbers of rows $m$ and the number of columns $n$ by writing $A_{m\times n}$. Moreover, we use the lowercase of the letter we just chose and with two numbers $i$ and $j$ to indicate the component $a_{ij}$ on the $i$-th row and the $j$-th column.
+    We usuallly use a capital latter to represent a matrix. For example, just as we see, $A$. In addition, we might use subscript so indicate the numbers of rows $m$ and the number of columns $n$ by writing $A_{m\times n}$. Moreover, we use subscript with two numbers $i$ and $j$ to indicate the component $A_{ij}$ on the $i$-th row and the $j$-th column of the matrix $A$ if there is no confusion.
 \end{notation}
 
 \begin{example}
     Let $$A=\begin{bmatrix}
         4 & 0 \\ -1 & 2
-    \end{bmatrix}.$$ Then, $a_{11}=4$, $a_{21}=-1$, $a_{12}=0$, and $a_{22}=2$.
+    \end{bmatrix}.$$ Then, $A_{11}=4$, $A_{21}=-1$, $A_{12}=0$, and $A_{22}=2$.
 \end{example}
 
 \begin{definition}[Upper Triangular]
-    We say a square matrix $A_{n\times n}$ is upper triangular if $a_{ij}=0$ for all $n\ge i>j>0$, i.e., \begin{equation*}
+    We say a square matrix $A_{n\times n}$ is upper triangular if $A_{ij}=0$ for all $n\ge i>j>0$, i.e., \begin{equation*}
         A=\begin{bmatrix}
             & & &\\
            0 & & \ast &\\
@@ -381,7 +381,7 @@ We can solve the equation by transforming the matrix $A$ into an upper triangula
     \end{bmatrix},\quad C=\begin{bmatrix}
         6 & 0 \\ 7 & -13
     \end{bmatrix}.$$ Then, $B$ is upper triangular, and $C$
-    is not upper triangular since $c_{21}\ne0$.
+    is not upper triangular since $A_{21}\ne0$.
 \end{example}
 
 \subsubsection*{Row Operation and Elementary Matrix}
@@ -416,7 +416,7 @@ What is $E_{21}$ and $E_{32}$? We have better to look into some properties of ma
 If we have a matrix $A_{m\times n}$ and a column vector $\bfv_{n\times 1}$, what does $A\bfv$ mean? We can of course apply the matrix multiplication on it, the answer should be obvious.
 
 \begin{definition}[Matrix Multiplication]
-    Let $A$ be an $m\times n$ matrix and let $B$ be an $n\times p$ matrix. Let $C=AB$. Then, $$c_{ij}=\sum_{\ell=1}^{n}a_{i\ell}b_{\ell j}$$ for $i=1,2,\dots,m$ and for $j=1,2,\dots,p$.
+    Let $A$ be an $m\times n$ matrix and let $B$ be an $n\times p$ matrix. Let $C=AB$. Then, $$C_{ij}=\sum_{\ell=1}^{n}A_{i\ell}B_{\ell j}$$ for $i=1,2,\dots,m$ and for $j=1,2,\dots,p$.
 \end{definition}
 
 However, we can actually observe that $$A\bfv=\sum_{i=1}^{n} v_i\bfa_i,$$ where $v_i$ is the $i$-th component of $\bfv$ and $\bfa_i$ is the $i$-th column of $A$. Through either way can we find out that the product $A\bfv$ is a column vector and is also an $n\times 1$ matrix.
@@ -484,6 +484,17 @@ We have one more critical skill about matrix multiplication, the block multiplic
     R_3 & R_4
 \end{bmatrix}.$$ Since $P_{20\times 20}Q_{20\times 20}=R_{20\times 20}$, we will have $R_1=P_1Q_1+P_2Q_3$. Nobody can see this instantly work, but it works.
 
+We have some rules about matrix multiplications.
+
+\begin{theorem}[Matrix Multiplication]
+    Let $A_{m\times n}, B_{n\times p}, C_{n\times p}, D_{k\times m}$ be matrices. Then,
+    \begin{enumerate}
+        \item $A(B+C)=AB+AC$,
+        \item $(B+C)D=BD+CD$, and
+        \item $(AB)C=A(BC)$.
+    \end{enumerate}
+\end{theorem}
+
 \subsubsection*{Inverse Matrix}
 
 For the equation $A_{m\times n}\bfx_{n\times 1}=\bfb_{m\times 1}$, if we can find some matrix $M$ such that $MA\bfx=\bfx$, then we just obtain the solution $\bfx=M\bfb$. How simple linear algebra is! In order to obtain the solution, we might ask for a stronger condition. If we have $MA\bfx=\bfx$ for all $\bfx\in\bbR^{n}$, then $MA$ is an $n\times n$ identity matrix, where we write $MA=I_n$. In this case, we call $M$ a left inverse of $A$. For the opposite case, $AN=I_m$, we call $N$ a right inverse of $A$.
@@ -508,16 +519,141 @@ Now, the question is that how we can find the inverse and in what condition we c
 
 We now obtain a sufficient and necessary condition about whether a matrix is invertible or not. We can now find the ways to obtain inverses.
 
-\begin{theorem}
+\begin{theorem}\label{theorem of Gauss-Jordan for inverse}
     Let $A$ be invertible. We consider the augmented matrix $[A\quad I]$ and use the Gauss-Jordan method on it until we have $[I\quad B]$. Then, $B$ is the inverse of $A$.
 \end{theorem}
-A quick explanation is that we see through the perspective of columns time columns. We are looking for the solution to equations 
-\begin{equation*}
-    A\bfb_i=\bfe_i,
-\end{equation*}
-for $i=1,2,\dots,n$, where $\bfb_i$ is the $i$-th column of the inverse of $A$ and $\bfe_i$ is the $i$-th column of $I_n$. Since these equations have the same coefficient matrix, the row operation on them are the same. Hence, we can just do once Gauss-Jordan method on the whold augmented matrix.
+\textbf{Proof}. Assume that $A$ can be decomposed into the identity matrix $I$. Then, we will have $$E_kE_{k-1}\cdots E_2 E_1 A=I$$ for $E_i$ elementary matrices. Note that elementary matrices are all invertible. This means the product of $E_i$'s are the inverse of $A$ by definition. Hence, we just need to do the same operation on $I$ to obtain $B$, which is now known as the inverse of $A$. That is, \begin{align*}
+    E_kE_{k-1}\cdots E_2 E_1I&=B\\
+    &=A^{-1}.
+\end{align*} \qed
 
-In addition, since we are doing row operations, so we can know that inverses are just multiplication of elementary matrices.
+In addition, since we are doing row operations, so we can know that inverses are just multiplication of elementary matrices, since we can either \begin{enumerate}
+    \item switch the rows again,
+    \item multiplicate a row by the inverse of the scalar again, or
+    \item add $(-1)$ of row $i$ to row $j$ again
+\end{enumerate}
+to cancel out the row operation we just done. The question is that how can we find the inverse if we have a matrix made up with a bunch of elementary matrices? We have a nice property about the inverse of the product of matrices.
+
+\begin{theorem}[Inverse of Product]
+    Let $A_{n\times n}, B_{n\times n}$ be invertible matrices. Then, $$(AB)^{-1}=B^{-1}A^{-1}.$$ To be more general, let $\{E_i\}_{i=1}^m$ be a finite sequence of invertible $n\times n$ matrices. Then, $$(E_1E_2\cdots E_{m-1}E_m)^{-1}={E_m}^{-1}{E_{m-1}}^{-1}\cdots{E_2}^{-1}{E_1}^{-1}.$$
+\end{theorem}
+
+\subsubsection*{LU Decomposition}
+
+Combining the concept of row operation and inverse matrix, it occurs to us that after transforming a matrix $A$ into an upper triangular matrix $U$, what kind of relation does $A$ and $U$ have? The answer is quite simple. We have the factorization \begin{equation}\label{PLU}
+    A=PLU,
+\end{equation}
+where $P$ is the so-called permutation matrix. Permutations are used for row exchanges. For example, there are six $3\times 3$ permutation matrices, $$\begin{bmatrix}
+    1 & 0 & 0\\
+    0 & 1 & 0\\
+    0 & 0 & 1
+\end{bmatrix}, \begin{bmatrix}
+    0 & 1 & 0\\
+    1 & 0 & 0\\
+    0 & 0 & 1
+\end{bmatrix}, \begin{bmatrix}
+    0 & 0 & 1\\
+    0 & 1 & 0\\
+    1 & 0 & 0
+\end{bmatrix}, \begin{bmatrix}
+    1 & 0 & 0\\
+    0 & 0 & 1\\
+    0 & 1 & 0
+\end{bmatrix}, \begin{bmatrix}
+    0 & 0 & 1\\
+    1 & 0 & 0\\
+    0 & 1 & 0
+\end{bmatrix}, \begin{bmatrix}
+    0 & 1 & 0\\
+    0 & 0 & 1\\
+    1 & 0 & 0
+\end{bmatrix}.$$ The first one changes nothing (no row exchange), which is the identity matrix. The second one exchanges the first and the second row. The third exchanges the first and the third row. The fourth exchanges the second and the third row. The fifth exchanges the second and the third row first, and then exchanges the newer first and the second row. We can see that $$\begin{bmatrix}
+    0 & 1 & 0\\
+    1 & 0 & 0\\
+    0 & 0 & 1
+\end{bmatrix}\begin{bmatrix}
+    1 & 0 & 0\\
+    0 & 0 & 1\\
+    0 & 1 & 0
+\end{bmatrix}=\begin{bmatrix}
+    0 & 0 & 1\\
+    1 & 0 & 0\\
+    0 & 1 & 0
+\end{bmatrix}.$$ The sixth exchanges the first and the third row first, and then exchanges the newer first and second row. We can see that $$\begin{bmatrix}
+    0 & 1 & 0\\
+    1 & 0 & 0\\
+    0 & 0 & 1
+\end{bmatrix}\begin{bmatrix}
+    0 & 0 & 1\\
+    0 & 1 & 0\\
+    1 & 0 & 0
+\end{bmatrix}=\begin{bmatrix}
+    0 & 1 & 0\\
+    0 & 0 & 1\\
+    1 & 0 & 0
+\end{bmatrix}.$$ In fact, these matrices are just different arrangements of rows $[1\quad 0\quad 0]$, $[0\quad 1\quad 0]$, and $[0\quad 0\quad 1]$. It can be known that there will be a number $n!$ of $n\times n$ permutation matrices since we can put the first row in $n$ ways (you have $n$ choices in the beginning), put the second row in $(n-1)$ ways (you already chose the position of the first row), continuing and put the last row in only one way. An interesting property of permutation matrices is that thier transposes are their inverses.
+
+\begin{definition}[Transpose]
+    Let $A_{m\times n}$ be a matrix. The transpose of $A$, denoted by $A^\transpose$ is defined by ${A^\transpose}_{ij}=A_{ji}.$ Thus, $A^\transpose$ will be an $n\times m$ matrix.
+\end{definition}
+
+\begin{example}
+    Let $$A=\begin{bmatrix}
+        0 & 4\\
+        -1 & 0
+    \end{bmatrix}.$$ Then, $$A^\transpose=\begin{bmatrix}
+        1 & -1\\
+        4 & 0
+    \end{bmatrix}.$$
+\end{example}
+
+We have a theorem about the inverse of the product of matrices, we of course have another theorem about the transpose of the product of matrices, and they are quite similar!
+
+\begin{theorem}[Transpose of Product]
+    Let $A_{m\times n}, B_{n\times p}$ be matrices. Then, $(AB)^{\transpose}=B^{\transpose}A^{\transpose}.$ That is, the transpose of the product is the product of transposes in reversed order.
+\end{theorem}
+\textbf{Proof}. Let $C=AB$. On the one hand, we have \begin{align*}
+    {C^T}_{ij}&=C_{ji}\\
+    &=\sum_{k=1}^{n}A_{jk}B_{ki}.
+\end{align*} On the other hand, we have \begin{align*}
+    (B^\transpose A^\transpose)_{ij}&=\sum_{k=1}^{n}(B^\transpose)_{ik}(A^\transpose)_{kj}\\
+    &=\sum_{k=1}^{n}B_{ki}A_{jk}\\
+    &=\sum_{k=1}^{n}A_{jk}B_{ki}.
+\end{align*} Therefore, $(AB)^{\transpose}=B^{\transpose}A^{\transpose}$ since ${C^T}_{ij}=(B^\transpose A^\transpose)_{ij}$ for all $i=1,2,\dots,p$ and $j=1,2,\dots,m$. \qed
+
+Getting back to our discussion about the inverse of permutations, we have the following result.
+
+\begin{theorem}[Inverse of Permutations]
+    Let $P$ be a permutation matrix. Then, $P^{-1}=P^\transpose.$ That is, the inverse of a permutation is the transpose of a permutation.
+\end{theorem}
+
+\begin{corollary}[Inverse of Permutations]
+    The inverse of a permutation matrix is still a permutation matrix.
+\end{corollary}
+
+Further combining inverse and transpose, we have the following property. 
+\begin{theorem}[Transpose of Inverse, Inverse of Transpose]
+    Let $A_{n\times n}$ be an invertible matrix. Then, $(A^{\transpose})^{-1}=(A^{-1})^\transpose.$ That is, the inverse of the transpose is the transpose of the inverse.
+\end{theorem}
+
+Take a small example for (\ref{PLU}). For simplicity, we first set $P=I$. We have $$A=\begin{bmatrix}
+    2 & 1 \\ 8 & 7
+\end{bmatrix}.$$ After row operation, our destination is $$U=\begin{bmatrix}
+    2 & 1 \\ 0 & 3
+\end{bmatrix}.$$
+We add $(-4)$ times of row $1$ to row $2$, obtaining $$\begin{bmatrix}
+    1 & 0 \\ -4 & 1
+\end{bmatrix}\begin{bmatrix}
+    2 & 1 \\ 8 & 7
+\end{bmatrix}=\begin{bmatrix}
+    2 & 1 \\ 0 & 3
+\end{bmatrix}.$$ So, in the language of (\ref{PLU}), we have $$\begin{bmatrix}
+    2 & 1 \\ 8 & 7
+\end{bmatrix}=\begin{bmatrix}
+    1 & 0 \\ 4 & 1
+\end{bmatrix}\begin{bmatrix}
+    2 & 1 \\ 0 & 3
+\end{bmatrix},$$ since the inverse matrix is just doing a backward operation, and the backward operation for adding $(-4)$ times of row $1$ to row $2$ is adding $4$ times of row $1$ to row $2$.
 
 \subsection{Four Fundamental Subspaces}
 
